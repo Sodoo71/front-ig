@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Heart } from "lucide-react";
+import { Heart, MessageCircle, Bookmark, Send } from "lucide-react";
 import { useAxios } from "../hooks/useAxios";
 import { useUser } from "../providers/UserProvider";
 import Link from "next/link";
@@ -42,27 +42,42 @@ export const PostCard = ({ post }: { post: Post }) => {
   return (
     <div key={post._id} className="mb-4 border-b py-4">
       <div className="flex justify-between">
-        <Link href={`/${post.createdBy.username}`}>
-          <div className="font-bold">{post.createdBy.username}</div>
+        <Link href={`/${post.createdBy.username}`} className="flex gap-2 text">
+          <div className="uppercase bg-gray-300 h-8 w-8 rounded-full flex items-center justify-center text-gray-600 font-bold">
+            {" "}
+            {post.createdBy?.username?.[0]?.toUpperCase() || "U"}
+          </div>
+          <span className="font-semibold">{post.createdBy?.username}</span>
         </Link>
-        <div className="font-bold">{dayjs(post.createdAt).fromNow()}</div>
+        <div className="text-xs text-gray-400 ml-2">
+          {dayjs(post.createdAt).fromNow()}
+        </div>
       </div>
-      <img src={post.imageUrl} alt="" />
-      <div className="flex">
+      <img
+        src={post.imageUrl}
+        alt=""
+        className="w-full -h-96 object-cover rounded-md"
+      />
+      
+      <div className="flex gap-2">
         <div
           className="hover:opacity-60 cursor-pointer"
           onClick={async () => {
-            const response = await axios.post(`/posts/${post._id}/like`);
-            setIsLiked(response.data.isLiked);
-
-            if (response.data.isLiked) {
-              setLikeCount(likeCount + 1);
-            } else {
-              setLikeCount(likeCount - 1);
-            }
+        const response = await axios.post(`/posts/${post._id}/like`);
+        const liked = response.data.isLiked;
+        setIsLiked(liked);
+        setLikeCount((c) => (liked ? c + 1 : c - 1));
           }}
         >
-          {isLiked ? <Heart fill="red" stroke="red" /> : <Heart />}
+          {isLiked ? <Heart fill="red" stroke="red" size={20} /> : <Heart size={20} />}
+        </div>
+        <MessageCircle
+          className="cursor-pointer hover:text-blue-500"
+          size={20}
+        />
+        <Send className="cursor-pointer hover:text-blue-500" size={20} />
+        <div>
+          <Bookmark className="cursor-pointer hover:text-blue-500" size={20} />
         </div>
       </div>
       <div>{likeCount} likes</div>
@@ -88,9 +103,18 @@ export const PostCard = ({ post }: { post: Post }) => {
         </div>
       )}
       <div className="relative">
-        <textarea value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a comment" className="w-full resize-none" rows={1} />
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Add a comment"
+          className="w-full resize-none"
+          rows={1}
+        />
         {text.length > 0 && (
-          <div onClick={handleSubmitComment} className="absolute hover:underline cursor-pointer right-0 top-0 font-bold">
+          <div
+            onClick={handleSubmitComment}
+            className="absolute hover:underline cursor-pointer right-0 top-0 font-bold"
+          >
             Post
           </div>
         )}

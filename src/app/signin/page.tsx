@@ -40,11 +40,14 @@ const SingInPage = () => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <Card>
-        <CardHeader>
-          <CardTitle>Signin</CardTitle>
-        </CardHeader>
-        <CardContent>
+          <img src="https://instaproapp.tools/wp-content/uploads/2025/07/insta-pro.png" alt="pic" />
+      <div className="flex flex-col items-center mb-6">
+        <div>
+          <img
+            className="h-40"
+            src="https://download.logo.wine/logo/Instagram/Instagram-Wordmark-Black-Logo.wine.png"
+            alt="logo"
+          />
           <div className="flex flex-col gap-4">
             <Input
               placeholder="Enter your email, phone or username..."
@@ -72,10 +75,10 @@ const SingInPage = () => {
                 {passwordShown ? <Eye /> : <EyeClosed />}
               </Button>
             </div>
-            <Button onClick={handleSignin}>Sign in</Button>
+            <Button className="bg-blue-700" onClick={handleSignin}>login</Button>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   );
 };
