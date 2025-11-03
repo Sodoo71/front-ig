@@ -34,6 +34,7 @@ export default function Home() {
       <div className="w-[600px] flex flex-col gap-4 mx-auto">
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />
+          
         ))}
       </div>
     </div>

@@ -58,7 +58,7 @@ const Page = () => {
 
       const { url: imageUrl } = await uploadResponse.json();
 
-      // Create post with the uploaded image URL
+     
       const response = await axios.post("/posts", { imageUrl, description });
 
       console.log(response);
@@ -67,7 +67,7 @@ const Page = () => {
       router.push("/");
     } catch (error) {
       console.error("Error creating post:", error);
-      toast.error("Failed to create post");
+      toast.error(" ");
     } finally {
       setUploading(false);
     }
@@ -85,7 +85,6 @@ const Page = () => {
         </Button>
       </div>
       <div className="py-4 flex flex-col gap-4">
-        {/* File input */}
         <div className="flex flex-col gap-2">
           <label
             htmlFor="file-upload"

@@ -6,6 +6,8 @@ export type User = {
 
   email: string | null;
   phone: string | null;
+  followersCount?: number;
+  followingCount?: number;
 };
 
 export type PostComment = {

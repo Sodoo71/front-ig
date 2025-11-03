@@ -56,20 +56,24 @@ export const PostCard = ({ post }: { post: Post }) => {
       <img
         src={post.imageUrl}
         alt=""
-        className="w-full -h-96 object-cover rounded-md"
+        className="w-full -h-96 object-cover rounded-md p-4"
       />
-      
       <div className="flex gap-2">
         <div
           className="hover:opacity-60 cursor-pointer"
           onClick={async () => {
-        const response = await axios.post(`/posts/${post._id}/like`);
-        const liked = response.data.isLiked;
-        setIsLiked(liked);
-        setLikeCount((c) => (liked ? c + 1 : c - 1));
+            const response = await axios.post(`/posts/${post._id}/like`);
+            const liked = response.data.isLiked;
+            setIsLiked(liked);
+            setLikeCount((c) => (liked ? c + 1 : c - 1));
           }}
         >
-          {isLiked ? <Heart fill="red" stroke="red" size={20} /> : <Heart size={20} />}
+          {isLiked ? (
+            <Heart stroke="red" size={20} />
+          ) : (
+            <Heart size={20} />
+          )}
+          <div className="flex">{likeCount}</div>
         </div>
         <MessageCircle
           className="cursor-pointer hover:text-blue-500"
@@ -80,7 +84,6 @@ export const PostCard = ({ post }: { post: Post }) => {
           <Bookmark className="cursor-pointer hover:text-blue-500" size={20} />
         </div>
       </div>
-      <div>{likeCount} likes</div>
       <hr />
       <Link href={`/${post.createdBy.username}`}>
         <b>{post.createdBy.username}</b>
