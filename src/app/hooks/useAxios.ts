@@ -8,7 +8,7 @@ export const useAxios = () => {
   if (token) headers["Authorization"] = "Bearer " + token;
 
   const axios = realAxios.create({
-    baseURL: "http://localhost:5500",
+    baseURL: "https://back-ig.vercel.app/",
     headers,
   });
 
